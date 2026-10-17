@@ -1,5 +1,5 @@
 // Deliberately fictional arcade travel distances, in kilometres.
-export const MARS={travelTime:60,departureDistance:54600000,orbitDistance:12000,radioTime:12,touchdownTime:17,finishTime:20};
+export const MARS={travelTime:50,departureDistance:54600000,orbitDistance:12000,radioTime:12,touchdownTime:17,finishTime:20};
 export function createMission(){return {phase:'waiting',elapsed:0,time:0,distance:MARS.departureDistance,events:[],origin:null};}
 export function missionActive(m){return m.phase==='capsule'||m.phase==='landed';}
 export function launchMission(m,origin){if(m.phase!=='ready')return false;m.phase='capsule';m.time=0;m.origin={...origin};m.events=[];return true;}

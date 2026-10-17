@@ -1,4 +1,4 @@
-import {codaPose,drawGodzilla,drawEnergyRay,drawCapsuleSmoke} from './mars-coda.mjs';
+import {codaPose,drawGodzilla,drawEnergyRay,drawCapsuleSmoke,drawFireworks} from './mars-coda.mjs';
 import {car} from './render.mjs';
 import {MARS} from './mission.mjs';
 const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x);},mix=(a,b,t)=>a+(b-a)*t;
@@ -25,6 +25,7 @@ export function drawMission(c,m,{width:w,height:h,reduced=false,celebrationAge=M
  if(landed){const top={x:cx+57*size*Math.sin(lean),y:baseY-57*size*Math.cos(lean)};drawEnergyRay(c,mouth,{x:cx+35*size*Math.sin(lean),y:baseY-35*size*Math.cos(lean)},celebrationAge,reduced);drawCapsuleSmoke(c,top.x,top.y,coda.smokeAge,reduced);}
  if(t>=MARS.touchdownTime)drawAliens(c,w,h,celebrationAge,reduced,Math.min(1,(t-MARS.touchdownTime)*2),true);
  if(t>=MARS.touchdownTime+.8){const flagX=cx+44*size;c.strokeStyle='#d7dfe3';c.lineWidth=2;c.beginPath();c.moveTo(flagX,baseY);c.lineTo(flagX,baseY-46*size);c.stroke();c.fillStyle='#93f4d0';c.fillRect(flagX,baseY-46*size,29*size,19*size);c.fillStyle='#123438';c.font=`bold ${13*size}px Arial`;c.textAlign='center';c.fillText('P',flagX+14*size,baseY-32*size);}
+ if(landed)drawFireworks(c,w,h,celebrationAge,reduced);
 }
 
 // The group gathers around the capsule's actual landing footprint, in a shallow
@@ -35,5 +36,5 @@ export function alienParty(width,height,age,reduced=false){const size=Math.max(.
  });}
 export const alienGatherTime=Math.max(...alienParty(1,1,0).map(a=>a.arrival));
 export function aliensGathered(age,reduced=false){return !!reduced||age+1e-9>=alienGatherTime;}
-export function yippeesRunning(age,reduced=false){return !!reduced||age+1e-9>=alienGatherTime-1;}
+export function yippeesRunning(age,reduced=false){return !!reduced||age+1e-9>=alienGatherTime-3;}
 function drawAliens(c,w,h,age,reduced,alpha,front){c.save();c.globalAlpha=alpha;const aliens=alienParty(w,h,age,reduced).sort((a,b)=>a.surface-b.surface);for(const a of aliens){if((a.surface>=a.baseY)!==front)continue;c.fillStyle='#080f0c45';c.beginPath();c.ellipse(a.x,a.surface,5,1.7,0,0,7);c.fill();c.shadowColor='#8bd84a';c.shadowBlur=1.5;c.fillStyle='#8de34c';c.beginPath();c.arc(a.x,a.y,a.radius,0,7);c.fill();c.shadowBlur=0;c.fillStyle='#244517';for(const side of [-1,1]){c.beginPath();c.arc(a.x+side*a.radius*.33,a.y-1,Math.max(.8,a.radius*.16),0,7);c.fill();}}c.restore();}

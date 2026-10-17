@@ -49,7 +49,7 @@ Run `node test-touch.mjs` for simultaneous-input, independent-release, lost-capt
 
 ## Mars mission
 
-After 60 seconds of active simulation above the space threshold, the Mars mission button becomes available. A fictional distance countdown and growing procedural red planet make coasting purposeful. The ready state holds until the player chooses to launch; Retry / R always returns to Earth. Distances and the minute-long journey are arcade fiction, not current astronomical measurements.
+After 50 seconds of active simulation above the space threshold, the Mars mission button becomes available. A fictional distance countdown and growing procedural red planet make coasting purposeful. The ready state holds until the player chooses to launch; Retry / R always returns to Earth. Distances and the minute-long journey are arcade fiction, not current astronomical measurements.
 
 Launching begins a 20-second automatic capsule finale. A white single-engine capsule separates, the abandoned car drifts down and rotates, and the camera moves toward the Martian surface. At 12 seconds the message reads “Houston, landing on Mars”; touchdown happens at 17 seconds, followed by dust, a parking flag and “Parked. On Mars.” The final button returns to Earth. Car controls are disabled and labelled as capsule autopilot during this sequence; pause, tab hiding and orientation-change pause remain supported. No score or Earth parking unlock is granted by the cinematic. A local Mars milestone persists.
 

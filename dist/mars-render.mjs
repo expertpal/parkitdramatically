@@ -35,4 +35,5 @@ export function alienParty(width,height,age,reduced=false){const size=Math.max(.
  });}
 export const alienGatherTime=Math.max(...alienParty(1,1,0).map(a=>a.arrival));
 export function aliensGathered(age,reduced=false){return !!reduced||age+1e-9>=alienGatherTime;}
+export function yippeesRunning(age,reduced=false){return !!reduced||age+1e-9>=alienGatherTime-1;}
 function drawAliens(c,w,h,age,reduced,alpha,front){c.save();c.globalAlpha=alpha;const aliens=alienParty(w,h,age,reduced).sort((a,b)=>a.surface-b.surface);for(const a of aliens){if((a.surface>=a.baseY)!==front)continue;c.fillStyle='#080f0c45';c.beginPath();c.ellipse(a.x,a.surface,5,1.7,0,0,7);c.fill();c.shadowColor='#8bd84a';c.shadowBlur=1.5;c.fillStyle='#8de34c';c.beginPath();c.arc(a.x,a.y,a.radius,0,7);c.fill();c.shadowBlur=0;c.fillStyle='#244517';for(const side of [-1,1]){c.beginPath();c.arc(a.x+side*a.radius*.33,a.y-1,Math.max(.8,a.radius*.16),0,7);c.fill();}}c.restore();}

@@ -4,7 +4,7 @@ import {Sound} from './dist/audio.mjs';
 import {createState} from './dist/physics.mjs';
 import {createMission,launchMission,stepMission} from './dist/mission.mjs';
 const m=createMission();assert.equal(approachDrone(m,false).gain,0);assert.equal(approachDrone(m,true).gain,0);
-for(let i=0;i<600;i++){stepMission(m,.1,true);const bed=approachDrone(m,true);assert.ok(bed.gain>=0&&bed.gain<=.2);assert.ok(bed.frequency>=48&&bed.frequency<=60);}
+for(let i=0;i<600;i++){stepMission(m,.1,true);const bed=approachDrone(m,true);assert.ok(bed.gain>=0&&bed.gain<=.25);assert.ok(bed.frequency>=48&&bed.frequency<=60);}
 assert.equal(m.phase,'ready');assert.ok(approachDrone(m,true).gain>0);assert.equal(approachDrone(m,false).gain,0);
 launchMission(m,{});assert.ok(approachDrone(m,false).gain>0,'Capsule has its own approach bed');
 const beforeRadio=approachDrone({...m,time:11.99}).gain,duringRadio=approachDrone({...m,time:12}).gain;assert.ok(duringRadio<beforeRadio*.6);

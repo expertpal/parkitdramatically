@@ -1,0 +1,40 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#071326"><title>Park It. Dramatically. — Free Thruster Parking Game</title>
+<meta name="description" content="Three seconds of air. Gravity has opinions. Play a free browser parking game: drive, fire your thrusters, and attempt a spectacular landing. No install needed.">
+<link rel="canonical" href="https://park-it-dramatically.horbor.chatgpt.site/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Park It. Dramatically.">
+<meta property="og:title" content="Park It. Dramatically.">
+<meta property="og:description" content="Three seconds of air. Gravity has opinions. Play a free browser parking game: drive, fire your thrusters, and attempt a spectacular landing. No install needed.">
+<meta property="og:url" content="https://park-it-dramatically.horbor.chatgpt.site/">
+<meta property="og:image" content="https://park-it-dramatically.horbor.chatgpt.site/assets/social-cover-v11.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1731">
+<meta property="og:image:height" content="909">
+<meta property="og:image:alt" content="Park It. Dramatically. A white sports car flying above an airport on two glowing thrusters. Three seconds of air. Gravity has opinions.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Park It. Dramatically.">
+<meta name="twitter:description" content="Three seconds of air. Gravity has opinions. Play a free browser parking game: drive, fire your thrusters, and attempt a spectacular landing. No install needed.">
+<meta name="twitter:image" content="https://park-it-dramatically.horbor.chatgpt.site/assets/social-cover-v11.png">
+<meta name="twitter:image:alt" content="A white sports car airborne on thrusters beside the title Park It. Dramatically.">
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="mobile.css"><link rel="stylesheet" href="mars.css"><link rel="stylesheet" href="share.css"></head><body>
+<main id="game" aria-label="Park It. Dramatically. A thruster-powered parking game">
+<div id="playfield">
+<canvas id="scene" aria-label="Side-view game: drive up the ramp, fly over the orange van, and land in the green parking space."></canvas>
+<header><h1>PARK IT.<span>DRAMATICALLY.</span></h1><div class="air"><div class="air-label">AIR <span id="air-time">3.0 s</span></div><div id="air-bars" aria-label="Air remaining"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><small id="air-note">ONE TANK. MAKE IT COUNT.</small></div><div class="best">BEST <strong id="best">000</strong><div class="utility"><button id="sound" aria-label="Mute sound" title="Mute sound">SOUND ON</button><button id="share-world" aria-label="Share how I parked" title="Share how I parked">↗</button><button id="pause" aria-label="Pause game" title="Pause (P)">Ⅱ</button></div></div></header>
+<div id="mission-hud" class="mission-hud hidden"><small>DISTANCE TO MARS</small><strong id="mars-distance"></strong><span id="mars-status"></span></div><button id="mars-launch" class="primary mars-launch hidden">Mars mission <span>↗</span></button>
+<div id="altimeter" class="altimeter hidden"><small id="alt-label">ALTITUDE</small><strong id="alt-value">0 m</strong></div><div id="toast" class="toast hidden" role="status"></div>
+<div id="intro" class="intro"><span class="eyebrow">ONE VERY UNNECESSARY PARKING MANOEUVRE</span><h2>Flight is optional.<br>Landing isn't.</h2><p>Drive up. Clear the van. Save some air for the landing.</p><button id="start" class="primary">LET'S PARK <span>↗</span></button><div class="intro-tip">Park once. Get a parachute. Park better. Get a rocket.</div></div>
+<div id="coach" class="coach" aria-live="polite"></div><div id="trick" class="trick"></div>
+<section id="result" class="result hidden" aria-live="polite"><span class="eyebrow" id="result-tag">PARKING REPORT</span><h2 id="result-title"></h2><p id="result-copy"></p><div id="gift" class="gift hidden"></div><div id="receipt" class="receipt hidden"></div><button id="retry" class="primary">ONE MORE TRY <span>↻</span></button><button id="share-result">Share how I parked ↗</button><small class="keyboard-only">or press R</small></section>
+<div id="paused" class="pause-overlay hidden"><h2>Taking a breather.</h2><button id="resume" class="primary">RESUME <span>→</span></button></div>
+<div class="garage"><div class="garage-label" id="gear-hint">YOUR FIRST LANDING COMES WITH A GIFT.</div><div class="gear-options"><button id="gear-parachute" title="Unlock with one successful landing" disabled>↟ PARACHUTE <span>LAND ONCE</span></button><button id="gear-rocket" title="Unlock with a flip landing or three clean landings" disabled>↗ ROCKET <span>FLIP + LAND / 3 LANDINGS</span></button><button id="ability" data-control="ability" class="hidden" aria-label="Use equipped gift">E · DEPLOY</button></div></div>
+</div>
+<footer><div class="keys"><span><kbd>←</kbd><kbd>→</kbd> DRIVE / BRAKE</span><span><kbd>A</kbd> REAR JET <kbd>D</kbd> FRONT JET</span><span><kbd>SPACE</kbd> BOTH</span><button id="restart"><kbd>R</kbd> RETRY</button></div><div class="credit">Questionably engineered by <a href="https://expertpal.de" target="_blank" rel="noopener">expertpal</a></div></footer>
+<div id="touch-controls" aria-label="Touch controls">
+ <div class="dock-top"><div class="dock-help"><button id="rotate-tip" title="Dismiss landscape suggestion">More room in landscape <span>×</span></button><span class="dock-tip">Hold to drive.<br>Hold to thrust.</span></div><div id="touch-ability-slot"></div><button id="mobile-retry" aria-label="Restart attempt">↻ <span>RETRY</span></button></div>
+ <div class="thumb-controls"><div class="drive-controls" role="group" aria-label="Driving"><button data-control="left" aria-label="Hold to brake or reverse"><b>◀</b><span>BRAKE</span></button><button data-control="right" aria-label="Hold to accelerate"><b>▶</b><span>DRIVE</span></button></div>
+ <div class="jet-controls" role="group" aria-label="Thrusters"><button data-control="rear" aria-label="Hold rear thruster"><b>↑</b><span>REAR</span></button><button data-control="both" class="both-jets" aria-label="Hold both thrusters to lift and level"><b>↑ ↑</b><span>BOTH</span></button><button data-control="front" aria-label="Hold front thruster"><b>↑</b><span>FRONT</span></button></div></div>
+</div>
+</main>
+<dialog id="share-dialog" aria-labelledby="share-title"><button id="share-close" aria-label="Close share preview">×</button><h2 id="share-title">Share how I parked</h2><img id="share-preview" alt="" hidden><p id="share-status" role="status"></p><div class="share-actions"><a id="share-download" hidden>Download PNG ↓</a><a id="share-fullsize" target="_blank" rel="noopener" hidden>Open full-size image ↗</a><button id="share-native" hidden>Share image ↗</button></div></dialog>
+<script type="module" src="game.mjs"></script></body></html>

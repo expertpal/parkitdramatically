@@ -44,6 +44,10 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      # Cloudflare caches .css for hours while HTML/.mjs refresh in minutes; version stylesheets so they never lag behind the JS.
+      - name: Version stylesheets
+        run: sed -i -E "s/href=\"([a-z-]+\.css)\"/href=\"\1?v=${GITHUB_SHA::8}\"/g" dist/index.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -106,3 +106,19 @@ Download-only browsers now request a PNG immediately within the original share-b
 The HTML head includes a descriptive title, description, canonical URL, Open Graph tags, image dimensions/alt text and a large-image Twitter card. The spoiler-free generated cover is `dist/assets/social-cover-v11.png` (1731 × 909 PNG), with its prompt recorded in ART-PROMPTS.md. No bicycle pelican or secret ending appears in the cover. The shipped image is static and needs no JavaScript to be discovered.
 
 Social metadata currently points at the existing Sites URL. Before hosting at the custom domain, run `node configure-site-url.mjs https://parkitdramatically.com/`. For GitHub Pages without that domain, pass the full Pages URL including its project subpath. Upload the complete `dist/` folder, including assets. Social crawlers need public access to the page and image; the current owner-private Sites deployment cannot provide a public social preview. This update does not change access or DNS.
+
+
+## Approach sound and mobile finale (v12)
+
+Space coasting and the capsule approach now have a quiet synthesized sine-wave drone. Four persistent voices combine a 48–63 Hz fundamental, a 0.7 Hz detuned voice and softer second/third harmonics for phone speakers. Gain fades in over the first three seconds of coasting, gently breathes, dips under the arrival radio cue and fades out within 1.5 seconds after touchdown. Gain/frequency use AudioParam smoothing. Mute, pause, the share preview and retry silence the drone. No new oscillators are allocated per frame. The engine/thruster sounds remain separate.
+
+On touch layouts, the Mars result moves out of the scene into the existing bottom control dock. Portrait shows the title above two 44 px buttons; landscape uses a single row. The lengthy report copy and gift panel are omitted in this compact view. Disabled driving controls disappear during the cinematic. A stable dock height (124 px portrait, 80 px landscape, plus safe-area inset) avoids a jump when the landing result appears. A ResizeObserver refits the Canvas whenever the playfield changes; returning to Earth or switching to desktop restores the result panel to the playfield. The Mars dock has no internal scroll container.
+
+`test-approach-audio.mjs` exercises coast/separation/landing, gain bounds, cue ducking, fade-out, mute/pause/share/retry and oscillator reuse with Web Audio stubs. Existing tests remain the gameplay regression gate. Mobile layout was checked against the supplied screenshot and CSS/DOM rules; real Samsung Browser layout and listening on phone speakers remain acceptance checks, as browser control is unavailable here.
+
+
+## Soft landing recovery (v13)
+
+A soft, upright touchdown now permits driving/reversing back into the green slot beyond the original runway bounds. Qualifying wheel contact is at most 150 world units/s, within 0.30 radians of upright, and with at most 1.2 radians/s rotation before contact response. Grounded recovery is exempt from the 35-second attempt timeout. Taking off again clears that permission, so each flight must finish safely. A hard, tilted or rapidly rotating off-map landing still crashes; van collisions remain fatal. The win/score/unlock only happens after settling inside the existing parking target. A toast and keyboard/touch direction hint explain what to do after a good off-target landing.
+
+`test-soft-landing.mjs` checks left/right off-map contact, rough-landing rejection, long recovery, full forward/reverse drives into the slot, camera follow, fresh-flight/retry state and collisions. Runtime changes in v13 are only `dist/physics.mjs` and `dist/game.mjs`; development changes are this README, package.json and the new test. No HTML, CSS, assets or public-domain metadata changed.

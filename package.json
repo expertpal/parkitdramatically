@@ -3,6 +3,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node test-physics.mjs && node test-upgrades.mjs && node test-touch.mjs && node test-mars.mjs && node test-flight-details.mjs && node test-motion.mjs && node test-mars-coda.mjs && node test-impact-share.mjs && node test-share-ui.mjs && node test-metadata.mjs"
+    "test": "node test-physics.mjs && node test-upgrades.mjs && node test-touch.mjs && node test-mars.mjs && node test-flight-details.mjs && node test-motion.mjs && node test-mars-coda.mjs && node test-impact-share.mjs && node test-share-ui.mjs && node test-metadata.mjs && node test-approach-audio.mjs && node test-soft-landing.mjs"
   }
 }

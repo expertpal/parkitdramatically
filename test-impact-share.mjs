@@ -21,9 +21,14 @@ assert.equal(snap.state.a,0);assert.equal(snap.camera.y,0);assert.equal(snap.run
 const earlier=snapshotWorld({...snap,state:{...snap.state,y:-20000,phase:'playing',spaceReached:true},camera:{x:0,y:-20310,zoom:1}});
 const mission=createMission();assert.equal(sharePlan(snap,earlier,mission).caption,'I call this parking.');
 const win={...snap,state:{...snap.state,phase:'landed'}};assert.equal(sharePlan(win,earlier,mission).caption,'Somehow, I parked it.');
+const touchdown=snapshotWorld({...snap,state:{...snap.state,phase:'playing',parachute:true,chuteOpen:1}});
+assert.equal(sharePlan(win,earlier,mission,touchdown).snapshot,touchdown);assert.equal(sharePlan(win,earlier,mission,touchdown).caption,'Somehow, I parked it.');
+assert.equal(sharePlan({...snap,state:{...snap.state,phase:'crashed'}},earlier,mission,touchdown).snapshot,touchdown);
+assert.equal(sharePlan({...snap,state:{...snap.state,phase:'playing'}},earlier,mission,touchdown).snapshot.state.phase,'playing','Mid-run shares stay live');
+assert.notEqual(sharePlan({...snap,state:{...snap.state,phase:'playing'}},earlier,mission,touchdown).snapshot,touchdown);
 mission.elapsed=40;assert.equal(sharePlan(snap,earlier,mission).snapshot,snap);
 mission.elapsed=45;assert.equal(sharePlan(snap,earlier,mission).snapshot,earlier);
 for(const [phase,time,classified] of [['ready',0,false],['capsule',0,false],['capsule',16.99,false],['capsule',17,true],['landed',20,true]]){
- Object.assign(mission,{phase,time});const plan=sharePlan(win,earlier,mission);assert.equal(plan.snapshot,earlier);assert.equal(plan.classified,classified);assert.ok(!/mars|capsule|alien|godzilla/i.test(JSON.stringify([plan.title,plan.caption,plan.filename])));if(classified)assert.equal(plan.title,'MISSION CLASSIFIED');else assert.equal(plan.caption,'I call this parking.');
+ Object.assign(mission,{phase,time});const plan=sharePlan(win,earlier,mission,touchdown);assert.equal(plan.snapshot,earlier);assert.equal(plan.classified,classified);assert.ok(!/mars|capsule|alien|godzilla/i.test(JSON.stringify([plan.title,plan.caption,plan.filename])));if(classified)assert.equal(plan.title,'MISSION CLASSIFIED');else assert.equal(plan.caption,'I call this parking.');
 }
 console.log('Passed: real minor/hard/catastrophic impacts, one-shot contact events, harmless timeout, expiry/reduced-motion, immutable photo pose, and spoiler-safe sharing at every mission boundary.');

@@ -6,11 +6,12 @@ import {MARS} from './mission.mjs';
 export function snapshotWorld({state,camera,width,height,time,particles=[],impacts=[],run}){
  return structuredClone({state,camera,width,height,time,particles,impacts,run});
 }
-export function sharePlan(current,earlier,mission){
+export function sharePlan(current,earlier,mission,landing=null){
  const cinematic=['capsule','landed'].includes(mission.phase);
  const classified=cinematic&&mission.time>=MARS.touchdownTime;
  const approach=cinematic||mission.phase==='ready'||mission.elapsed>=45;
- return {snapshot:approach?(earlier||current):current,classified,
+ const finished=['landed','crashed'].includes(current.state.phase);
+ return {snapshot:approach?(earlier||current):(finished&&landing)||current,classified,
   title:classified?'MISSION CLASSIFIED':'PARK IT. DRAMATICALLY.',
   caption:classified?"You wouldn't believe where I ended up.":!approach&&current.state.phase==='landed'?'Somehow, I parked it.':'I call this parking.',
   filename:classified?'mission-classified.png':'park-it-dramatically.png'};

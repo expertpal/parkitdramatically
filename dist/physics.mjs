@@ -14,9 +14,9 @@ s.chuteOpen=Math.min(1,s.chuteOpen+(s.parachute?dt*2.5:0));
 let use=(+rear + +front)*.5;const fraction=use?Math.min(1,s.air/(dt*use)):0;s.rear=rear?fraction:0;s.front=front?fraction:0;s.air=Math.max(0,s.air-dt*use*fraction);
 const sum=s.rear+s.front; s.vx+=Math.sin(s.a)*TUNE.jet*sum*dt;const gravity=TUNE.gravity*(1-Math.min(1,Math.max(0,(height-5000)/13000)));s.vy+=(gravity-Math.cos(s.a)*TUNE.jet*sum)*dt;s.w+=(s.rear-s.front)*TUNE.jet*49/TUNE.inertia*dt;if(s.rear&&s.front){s.w+=(-angleWrap(s.a)*9-s.w*4.8)*dt;}s.w*=Math.exp(-TUNE.angularDrag*dt);
 s.rocket=input.ability&&s.gear==='rocket'&&s.rocketFuel>0?Math.min(1,s.rocketFuel/dt):0;
-if(s.rocket){s.rocketFuel=Math.max(0,s.rocketFuel-dt*s.rocket);s.vx+=Math.sin(s.a)*1000*s.rocket*dt;s.vy-=Math.cos(s.a)*1000*s.rocket*dt;s.w+=(-angleWrap(s.a)*12-s.w*6)*dt;s.vy=Math.max(-2400,s.vy);}
+if(s.rocket){s.rocketFuel=Math.max(0,s.rocketFuel-dt*s.rocket);s.vx+=(Math.abs(angleWrap(s.a))<.02?0:Math.sin(s.a))*1000*s.rocket*dt;s.vy-=Math.cos(s.a)*1000*s.rocket*dt;s.w+=(-angleWrap(s.a)*12-s.w*6)*dt;s.vy=Math.max(-2400,s.vy);}
 if(s.parachute){let k=s.chuteOpen;s.vy-=Math.max(0,s.vy)*4.4*k*dt;s.vx+=(drive*170-s.vx*1.3)*k*dt;s.w+=(-angleWrap(s.a)*8-s.w*5)*k*dt;}
-if(s.grounded){s.vx+=drive*TUNE.drive*dt;if(!drive)s.vx*=Math.exp(-(.6+(s.x>WORLD.padStart?3.6:0))*dt);s.vx=clamp(s.vx,-160,TUNE.maxSpeed);}
+if(s.grounded){s.vx+=drive*TUNE.drive*dt;if(!drive){s.vx*=Math.exp(-(.6+(s.x>WORLD.padStart?3.6:0))*dt);if(Math.abs(s.vx)<8&&terrain(s.x).slope===0)s.vx=0;}s.vx=clamp(s.vx,-160,TUNE.maxSpeed);}
 s.vx*=Math.exp(-.012*dt);const oldAngle=s.a;s.x+=s.vx*dt;s.y+=s.vy*dt;s.a+=s.w*dt;
 s.travelAngle+=s.airborne?s.a-oldAngle:0;s.flips=Math.max(s.flips,Math.floor((Math.abs(s.travelAngle)+.1)/(Math.PI*2)));s.maxHeight=Math.max(s.maxHeight,WORLD.ground-28-s.y);s.peakSpeed=Math.max(s.peakSpeed,Math.hypot(s.vx,s.vy));s.wheel+=s.vx*dt/14;
 if(!s.spaceReached&&s.maxHeight>=TUNE.spaceHeight){s.spaceReached=true;s.events.push({type:'space'});}
